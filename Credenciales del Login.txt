@@ -1,0 +1,21 @@
+ ADMINISTRADOR
+*************************************************
+
+Usuario		: admin@mercadeonica.com
+Contraseña	: admin123
+
+
+
+VENDEDOR
+*************************************************  
+
+Usuario		: franklin.v@mercadeonica.com
+Contraseña	: vendedor123                        
+
+
+
+VENDEDOR
+*************************************************
+                         
+Usuario		:franklin@gmail.com
+Contraseña	: cliente123

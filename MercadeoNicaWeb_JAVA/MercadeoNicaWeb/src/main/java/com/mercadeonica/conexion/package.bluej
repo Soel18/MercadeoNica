@@ -1,0 +1,26 @@
+#BlueJ package file
+objectbench.height=903
+objectbench.width=642
+package.baseName=com.mercadeonica.conexion
+package.editor.height=903
+package.editor.width=642
+package.editor.x=0
+package.editor.y=0
+package.numDependencies=0
+package.numTargets=1
+package.showAssociations=true
+package.showContainments=true
+package.showExtends=true
+package.showImplements=true
+package.showUses=true
+project.charset=UTF-8
+target1.fields=-\ SERVIDOR\ \:\ String/,/-\ BASE\ \:\ String/,/-\ USUARIO\ \:\ String/,/-\ PASSWORD\ \:\ String/,/-\ URL\ \:\ String/,/\ e\ \:\ ClassNotFoundException
+target1.height=50
+target1.methods=+\ getConexion()\ \:\ Connection/,/+\ main(String[])\ \:\ void
+target1.name=ConexionBD
+target1.showInterface=true
+target1.type=ClassTarget
+target1.visible=true
+target1.width=90
+target1.x=10
+target1.y=10

@@ -1,0 +1,199 @@
+VERIFICAR WSL2
+***************
+wsl --status
+
+Nota: En casi que no tengas Ubunto debes escribir: wsl --install -d Ubuntu
+Nota: En caso que Windows solicite reinicar debes de reinicar el sistema operativo.
+
+INGRESAR A UBUNTU
+*****************
+wsl o ubuntu
+
+ACTRUALIZAR PAQUETES DE UBUNTU
+*******************************
+
+sudo apt update
+sudo apt upgrade -y
+
+INSTALACION DE JAVA 17
+**********************
+sudo apt install openjdk-17-jdk -y
+
+VERIFICAR VERSION DE JAVA
+*************************
+java -version
+
+LOCALIZA JAVA_HOME
+******************
+readlink -f $(which java)
+
+copiamos la ruta resultante y la asignamos a la variable de entorno 
+JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64/bin/java
+
+DESCARGAR TOMCAT
+****************
+cd /tmp
+
+DESCARGAMOS TOMCAT
+******************
+wget https://downloads.apache.org/tomcat/tomcat-10/v10.1.60/bin/apache-tomcat-10.1.60.tar.gz  
+
+
+DESCOMPRIMIR
+************
+
+sudo mkdir -p /opt/tomcat
+sudo tar -xvzf apache-tomcat-10.1.60.tar.gz -C /opt/tomcat --strip-components=1
+
+
+COMFIGURAR VARIABLES
+********************
+
+nano ~/.bashrc
+
+
+AGREGAMOS AL FINAL DEL SCRIPT
+*****************************
+
+export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export CATALINA_HOME=/opt/tomcat
+
+
+APLICAR CAMBIOS
+***************
+
+source ~/.bashrc
+
+VERIFICAR
+*********
+
+echo $ JAVA_HOME
+echo $CATALINA_HOME
+
+
+
+INICAR TOMCAT
+**************
+
+ASIGNAMOS PERMISOS (sudo su):
+*******************
+
+chmod +x /opt/tomcat/bin/*.sh
+
+
+INICAR
+******
+
+/opt/tomcat/bin/startup.sh
+
+
+VERIFICAR EL PUERTO
+********************
+
+ss -tulpn | grep 8080
+
+COMPROBAMOS TOMCAT
+******************
+
+http://localhost:8080/
+
+
+
+CREAR UN USUARIO ADMINISTRADOR
+******************************
+
+sudo nano /opt/tomcat/conf/tomcat-users.xml
+
+
+antes del final de </tomcat-users> , escribiremos:
+
+<role rolename="manager-gui"/>
+<role rolename="admin-gui"/>
+
+<user
+ username="admin"
+ password="Admin1234"
+ roles="manager-gui,admin-gui"/>	
+
+
+PERMITIR EL ACCESO AL MANAGER
+******************************
+
+sudo nano /opt/tomcat/webapps/manager/META-INF/context.xml
+
+
+al ingresar debemos de descomentar esta linea de script (foto 1)
+
+
+hacer lo mismo en el otro archivo (Foto 2)
+
+sudo nano /opt/tomcat/webapps/host-manager/META-INF/context.xml
+
+
+
+PROCEDEMOS A REINICAR TOMCAT
+*****************************
+/opt/tomcat/bin/shutdown.sh
+
+luego
+
+/opt/tomcat/bin/startup.sh
+
+luego pegamos en ela web:
+
+http://localhost:8080/manager/html
+
+
+terminar de configurar
+**********************
+
+sudo nano /opt/tomcat/conf/server.xml
+
+
+
+<Connector port="8080" protocol="HTTP/1.1"
+           connectionTimeout="20000"
+           address="0.0.0.0"
+           redirectPort="8443"
+           maxParameterCount="1000"
+           />
+
+
+172.22.90.78
+
+Nota en caso que no funcione los pasos anteriores se procede a la instalación de este otro túnel y el te WireGuard ya no tenia instalado en otro equipo y desde ahí realice el enlace.
+
+
+CREAR TUNEL SSH CLOUDFLARED
+***************************
+Desde PowerShell realizamos la instalación del paquete CloudFlared
+
+winget install --id  Cloudflare.cloudflared
+
+
+Creamos el Tunel TCP
+*********************
+
+cludflared tunnel --url http://localhost:8081
+o
+cludflared tunnel --url http://127.0.0.1:8081
+o
+cludflared tunnel --url http://172.26.32.241:8081
+
+cloudflared tunnel --url http://localhost:8081
+
+Cloudflared mostrará la url de la siguiente manera:
+
+2026-10-02T22:40:59Z INF +--------------------------------------------------------------------------------------------+
+2026-10-02T22:40:59Z INF |  Your quick Tunnel has been created! Visit it at (it may take some time to be reachable):  |
+2026-10-02T22:40:59Z INF |  https://interracial-viewed-rewards-cups.trycloudflare.com                                 |
+2026-10-02T22:40:59Z INF +--------------------------------------------------------------------------------------------+
+
+
+Nosotros enviaremos a nuestros clientes la url proporcinada por cloudflared concatenando nuestra aplicación:
+https://slip-just-surge-mighty.trycloudflare.com/MercadeoNicaWeb/login.jsp
+
+/****************** URL CLOUDFLARED *********************//******* mi aplicación ****/     
+
+
+  https://uniform-manchester-modems-provide.trycloudflare.com/MercadeoNicaWeb/login.jsp
